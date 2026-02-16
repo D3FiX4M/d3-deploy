@@ -7,7 +7,7 @@ config:
     password: client
 image:
   repository: d3fix4m/ms-d3-client
-  tag: '1'
+  tag: 0.0.8
   pullPolicy: IfNotPresent
   username: d3fix4m
   password: dckr_pat_PRnxkd4grbR_i51hlQvf7tKfAEE
