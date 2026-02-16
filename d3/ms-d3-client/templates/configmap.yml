@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Release.Name}}-config
+data:
+  JAVA_TOOL_OPTIONS: {{ .Values.java_tool_options | quote }}
+  SERVER_PORT: {{ .Values.server_port | quote }}
+  DB_URL: {{ .Values.db_url | quote }}
+  DB_USERNAME: {{ .Values.db_username | quote }}
+  KAFKA_BOOTSTRAP_SERVERS: {{ .Values.kafka_bootstrap_servers | quote }}
+  TRACE_URL: {{ .Values.trace_url | quote }}

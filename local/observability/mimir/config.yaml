@@ -1,0 +1,22 @@
+multitenancy_enabled: false
+
+server:
+  http_listen_port: 9009
+
+common:
+  storage:
+    backend: s3
+    s3:
+      endpoint: d3.minio.local:9000
+      access_key_id: d3fix4m
+      secret_access_key: d3d3d3d3
+      insecure: true
+
+
+blocks_storage:
+  s3:
+    bucket_name: mimir-blocks
+
+ruler_storage:
+  s3:
+    bucket_name: mimir-rules

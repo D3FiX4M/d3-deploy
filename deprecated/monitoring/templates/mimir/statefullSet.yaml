@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mimir
+spec:
+  serviceName: mimir
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mimir
+  template:
+    metadata:
+      labels:
+        app: mimir
+    spec:
+      containers:
+        - name: mimir
+          image: "{{ .Values.mimir.image.repository }}:{{ .Values.mimir.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          args:
+            - "-config.file=/etc/mimir/mimir.yaml"
+            - "-config.expand-env=true"
+          ports:
+            - containerPort: 9009
+          envFrom:
+            - secretRef:
+                name: {{.Release.Name}}-secret
+          volumeMounts:
+            - name: config
+              mountPath: /etc/mimir
+      volumes:
+        - name: config
+          configMap:
+            name: mimir-config
+            items:
+              - key: mimir.yaml
+                path: mimir.yaml
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: hostpath
+        resources:
+          requests:
+            storage: '1Gi'

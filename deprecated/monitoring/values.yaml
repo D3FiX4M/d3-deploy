@@ -1,0 +1,28 @@
+loki:
+  image:
+    repository: grafana/loki
+    tag: 3.6.6
+tempo:
+  image:
+    repository: grafana/tempo
+    tag: 2.10.0
+mimir:
+  image:
+    repository: grafana/mimir
+    tag: 3.0.3
+otel_collector:
+  image:
+    repository: otel/opentelemetry-collector-contrib
+    tag: 0.146.1
+grafana:
+  image:
+    repository: grafana/grafana
+    tag: 12.4
+  password: d3d3
+
+common:
+  s3:
+    url: 192.168.1.20:9000
+    login: d3fix4m
+    password: d3d3d3d3
+

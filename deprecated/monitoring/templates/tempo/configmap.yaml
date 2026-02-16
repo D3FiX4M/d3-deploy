@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tempo-config
+data:
+  tempo.yaml: |
+    server:
+      http_listen_port: 3200
+
+    distributor:
+      receivers:
+        otlp:
+          protocols:
+            grpc:
+              endpoint: 0.0.0.0:4317
+
+    storage:
+      trace:
+        backend: s3
+        s3:
+          endpoint: ${S3_URL}
+          bucket: tempo
+          access_key: ${S3_LOGIN}
+          secret_key: ${S3_PASSWORD}
+          insecure: true

@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-init-buckets
+  namespace: monitoring
+spec:
+  template:
+    spec:
+      containers:
+        - name: mc
+          image: minio/mc:latest
+          env:
+            - name: MINIO_ROOT_USER
+              value: d3fix4m
+            - name: MINIO_ROOT_PASSWORD
+              value: d3d3d3d3
+          command: [ "/bin/sh", "-c" ]
+          args:
+            - |
+              set -e
+              echo "$(date +%T) Starting MinIO bucket creation job..."
+
+              until mc alias set minio http://minio:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD 2>/dev/null && mc ls minio >/dev/null 2>&1; do
+                echo "$(date +%T) Waiting for MinIO to be ready..."
+                sleep 2
+              done
+
+              echo "$(date +%T) MinIO is ready, creating buckets..."
+
+              BUCKETS=("loki" "tempo")
+
+              for bucket in "${BUCKETS[@]}"; do
+                echo "$(date +%T) Creating bucket: $bucket"
+                mc mb minio/$bucket && echo "$(date +%T) Bucket $bucket created" || echo "$(date +%T) Bucket $bucket already exists"
+              done
+
+              echo "$(date +%T) Bucket setup complete."
+      restartPolicy: OnFailure

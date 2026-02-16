@@ -1,0 +1,10 @@
+image:
+  repository: d3fix4m/ms-d3-client
+  tag: 1.0.0
+java_tool_options: ''
+server_port: '8080'
+db_url: jdbc:postgresql://d3-client-db-0.d3-client-db.datasource.svc.cluster.local:5432/client
+db_username: d3fix4m
+db_password: d3d3
+kafka_bootstrap_servers: d3-kafka.broker.svc.cluster.local:9092
+trace_url: http://tempo.monitoring.svc.cluster.local:4318/v1/traces
