@@ -36,7 +36,8 @@ jobs:
 
       # ---------------- Gradle Build ----------------
       - name: Build with Gradle
-        run: ./app/gradlew bootJar
+        working-directory: ./app
+        run: ./gradlew bootJar
 
       - name: Set branch name for tag
         id: branch
