@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}
+spec:
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: {{.Release.Name}}
+    spec:
+      imagePullSecrets:
+        - name: {{.Release.Name}}-docker-secret
+      containers:
+        - name: {{.Release.Name}}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{.Values.image.pullPolicy}}
+          ports:
+            - containerPort: {{.Values.config.server.port}}
+          env:
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_PORT
+                  name: {{.Release.Name}}-config
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_URL
+                  name: {{.Release.Name}}-config
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: DB_USERNAME
+                  name: {{.Release.Name}}-secret
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: DB_PASSWORD
+                  name: {{.Release.Name}}-secret
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          readinessProbe:
+            httpGet:
+              port: {{.Values.config.server.port}}
+              path: /actuator/health/readiness
+            initialDelaySeconds: 40
+            periodSeconds: 5
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              port: {{.Values.config.server.port}}
+              path: /actuator/health/liveness
+            initialDelaySeconds: 50
+            periodSeconds: 10
+            failureThreshold: 3
+
