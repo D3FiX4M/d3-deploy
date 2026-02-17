@@ -9,5 +9,3 @@ image:
   repository: d3fix4m/ms-d3-client
   tag: 1.0.0.0.0.20
   pullPolicy: IfNotPresent
-  username: d3fix4m
-  password: dckr_pat_tzIdV7bHcmQvNrFzIz1ljYbX6bw
