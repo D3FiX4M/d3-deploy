@@ -1,10 +1,8 @@
 image:
   repository: d3fix4m/ms-d3-client
-  tag: 1.0.0.0.0.21
-
+  tag: 1.0.0.0.0.23
 server_port: '8080'
 db_url: jdbc:postgresql://d3-client-db-0.d3-client-db-service.db.svc.cluster.local:5432/client
 db_username: client
-#  TODO убрать в секреты
 db_password: client
 kafka_boostrap_servers: kafka-headless.kafka.svc.cluster.local
