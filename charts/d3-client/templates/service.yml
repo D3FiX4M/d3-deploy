@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: {{.Release.Name}}-service
 spec:
-  type: ClusterIP
   selector:
     app: {{.Release.Name}}
   ports:

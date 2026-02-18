@@ -1,11 +1,10 @@
-config:
-  server:
-    port: '8080'
-  db:
-    url: jdbc:postgresql://host.docker.internal:5432/client
-    username: client
-    password: client
 image:
   repository: d3fix4m/ms-d3-client
   tag: 1.0.0.0.0.20
-  pullPolicy: IfNotPresent
+
+server_port: '8080'
+db_url: jdbc:postgresql://host.docker.internal:5432/client
+db_username: client
+#  TODO убрать в секреты
+db_password: client
+

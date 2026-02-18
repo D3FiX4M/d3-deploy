@@ -3,5 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{.Release.Name}}-config
 data:
-  SERVER_PORT: {{ .Values.config.server.port | quote }}
-  DB_URL: {{ .Values.config.db.url | quote }}
+  SERVER_PORT: {{ .Values.server_port | quote }}
+  DB_URL: {{ .Values.db_url | quote }}
+  DB_USERNAME: {{ .Values.db_username | quote }}

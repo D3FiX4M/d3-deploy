@@ -1,5 +1,5 @@
+## Создаем секрет с кредами докер хаба
 
-## Создаем секрет с кредами докер хаба 
 kubectl create secret docker-registry docker-hub-secret \
 --docker-server=https://index.docker.io/v1/ \
 --docker-username=USERNAME \
@@ -7,4 +7,5 @@ kubectl create secret docker-registry docker-hub-secret \
 -n d3
 
 ## Устанавливаем serviceAccount
+
 kubectl apply -f service-account.yml
