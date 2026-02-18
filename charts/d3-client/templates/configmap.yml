@@ -6,3 +6,4 @@ data:
   SERVER_PORT: {{ .Values.server_port | quote }}
   DB_URL: {{ .Values.db_url | quote }}
   DB_USERNAME: {{ .Values.db_username | quote }}
+  KAFKA_BOOSTRAP_SERVERS: {{.Values.kafka_boostrap_servers}}
