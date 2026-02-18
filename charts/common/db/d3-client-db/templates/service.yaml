@@ -5,7 +5,7 @@ metadata:
 spec:
   clusterIP: None
   selector:
-    app: {{ .Release.Name }}-service
+    app: {{ .Release.Name }}
   ports:
     - port: 5432
       targetPort: 5432
