@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{.Release.Name}}
+spec:
+  serviceName: {{.Release.Name}}-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{.Release.Name}}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_DB
+              value: {{ .Values.db_name }}
+            - name: POSTGRES_USER
+              value: {{ .Values.db_username }}
+            - name: POSTGRES_PASSWORD
+              value: {{.Values.db_password}}
+          volumeMounts:
+            - name: {{.Release.Name}}-data
+              mountPath: /var/lib/postgresql/18/docker
+  volumeClaimTemplates:
+    - metadata:
+        name: {{.Release.Name}}-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: '1Gi'

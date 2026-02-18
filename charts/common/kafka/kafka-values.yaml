@@ -1,0 +1,9 @@
+replicaCount: 1
+
+zookeeper:
+  replicaCount: 1
+
+data:
+  storageSize: 4Gi
+
+
