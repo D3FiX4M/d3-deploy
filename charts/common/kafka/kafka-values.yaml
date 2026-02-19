@@ -1,5 +1,19 @@
 replicaCount: 1
 
+defaultReplicationFactor: 1
+offsetsTopicReplicationFactor: 1
+minInsyncReplicas: 1
+
+externalAccess:
+  enabled: true
+  type: nodeport
+  initNodePort: 30092
+  nodePorts:
+    - 30092
+
+port:
+  kafkaExternal: 30092
+
 zookeeper:
   replicaCount: 1
 
