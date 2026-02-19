@@ -1,0 +1,5 @@
+image:
+  repository: d3fix4m/ms-d3-notification
+  tag: 1.0.0.0.0.2
+server_port: '8080'
+kafka_bootstrap_servers: kafka-0.kafka-headless.kafka.svc.cluster.local:9092

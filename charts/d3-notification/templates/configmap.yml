@@ -4,6 +4,4 @@ metadata:
   name: {{.Release.Name}}-config
 data:
   SERVER_PORT: {{ .Values.server_port | quote }}
-  DB_URL: {{ .Values.db_url | quote }}
-  DB_USERNAME: {{ .Values.db_username | quote }}
   KAFKA_BOOTSTRAP_SERVERS: {{ .Values.kafka_bootstrap_servers | quote }}

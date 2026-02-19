@@ -5,4 +5,4 @@ server_port: '8080'
 db_url: jdbc:postgresql://d3-client-db-0.d3-client-db-service.db.svc.cluster.local:5432/client
 db_username: client
 db_password: client
-kafka_boostrap_servers: kafka-0.kafka-headless.kafka.svc.cluster.local:9092
+kafka_bootstrap_servers: kafka-0.kafka-headless.kafka.svc.cluster.local:9092
