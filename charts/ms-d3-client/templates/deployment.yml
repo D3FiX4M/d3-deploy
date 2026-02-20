@@ -31,14 +31,14 @@ spec:
             httpGet:
               port: {{.Values.server_port}}
               path: /actuator/health/readiness
-            initialDelaySeconds: 30
+            initialDelaySeconds: 45
             periodSeconds: 5
             failureThreshold: 6
           livenessProbe:
             httpGet:
               port: {{.Values.server_port}}
               path: /actuator/health/liveness
-            initialDelaySeconds: 40
+            initialDelaySeconds: 60
             periodSeconds: 5
             failureThreshold: 3
 
