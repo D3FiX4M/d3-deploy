@@ -6,7 +6,14 @@ java_tool_options: "-javaagent:/telemetry/opentelemetry-javaagent.jar \
 -Dotel.service.name=ms-d3-client \
 -Dotel.exporter.otlp.endpoint=http://otel-collector.d3-tracing.svc.cluster.local:4317 \
 -Dotel.exporter.otlp.protocol=grpc \
--Dotel.resource.attributes=service.namespace=d3-tracing"
+-Dotel.resource.attributes=service.namespace=d3-tracing \
+-Dotel.traces.exporter=otlp \
+-Dotel.metrics.exporter=none \
+-Dotel.logs.exporter=none \
+-Dotel.instrumentation.spring.enabled=true \
+-Dotel.instrumentation.kafka.enabled=true \
+"
+
 
 server_port: '8080'
 db_url: jdbc:postgresql://d3-client-db-0.d3-client-db-service.db.svc.cluster.local:5432/client
