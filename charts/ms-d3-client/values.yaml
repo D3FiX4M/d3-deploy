@@ -6,3 +6,13 @@ db_url: jdbc:postgresql://d3-client-db-0.d3-client-db-service.db.svc.cluster.loc
 db_username: client
 db_password: client
 kafka_bootstrap_servers: kafka-0.kafka-headless.kafka.svc.cluster.local:9092
+
+
+env:
+  - name: JAVA_TOOL_OPTIONS
+    value: >
+      -javaagent:/telemetry/opentelemetry-javaagent.jar
+      -Dotel.service.name=ms-d3-client
+      -Dotel.exporter.otlp.endpoint=http://otel-collector.d3-tracing.svc.cluster.local:4317
+      -Dotel.exporter.otlp.protocol=grpc
+      -Dotel.resource.attributes=service.namespace=d3-tracing
