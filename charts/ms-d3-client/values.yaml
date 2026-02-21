@@ -4,7 +4,7 @@ image:
 
 java_tool_options: "-javaagent:/telemetry/opentelemetry-javaagent.jar \
 -Dotel.service.name=ms-d3-client \
--Dotel.exporter.otlp.endpoint=http://otel-collector.d3-tracing.svc.cluster.local:4317 \
+-Dotel.exporter.otlp.endpoint=http://otel-collector-opentelemetry-collector.d3-tracing.svc.cluster.local:4317 \
 -Dotel.exporter.otlp.protocol=grpc \
 -Dotel.resource.attributes=service.namespace=d3-tracing \
 -Dotel.traces.exporter=otlp \
