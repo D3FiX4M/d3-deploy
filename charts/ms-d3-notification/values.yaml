@@ -15,3 +15,4 @@ java_tool_options: "-javaagent:/telemetry/opentelemetry-javaagent.jar \
 
 server_port: '8080'
 kafka_bootstrap_servers: kafka-0.kafka-headless.kafka.svc.cluster.local:9092
+ms_d3_client_url: ms-d3-client.d3.svc.cluster.local:8080
