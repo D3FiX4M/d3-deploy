@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{.Release.Name}}-config
 data:
+  JAVA_TOOL_OPTIONS: {{ .Values.java_tool_options | quote }}
   SERVER_PORT: {{ .Values.server_port | quote }}
   KAFKA_BOOTSTRAP_SERVERS: {{ .Values.kafka_bootstrap_servers | quote }}
   MS_D3_CLIENT_URL: {{ .Values.ms_d3_client_url | quote }}
