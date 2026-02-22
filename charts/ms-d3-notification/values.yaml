@@ -1,5 +1,17 @@
 image:
   repository: d3fix4m/ms-d3-notification
   tag: 1.0.0
+
+java_tool_options: "-javaagent:/telemetry/opentelemetry-javaagent.jar \
+-Dotel.service.name=ms-d3-notificationn \
+-Dotel.exporter.otlp.endpoint=http://otel-collector-opentelemetry-collector.d3-tracing.svc.cluster.local:4317 \
+-Dotel.exporter.otlp.protocol=grpc \
+-Dotel.traces.exporter=otlp \
+-Dotel.metrics.exporter=none \
+-Dotel.logs.exporter=none \
+-Dotel.instrumentation.spring.enabled=true \
+-Dotel.instrumentation.kafka.enabled=true \
+"
+
 server_port: '8080'
 kafka_bootstrap_servers: kafka-0.kafka-headless.kafka.svc.cluster.local:9092
