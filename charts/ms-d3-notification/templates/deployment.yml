@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{.Release.Name}}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+    prometheus.io/path: "/actuator/prometheus"
 spec:
   selector:
     matchLabels:
@@ -17,7 +21,7 @@ spec:
       containers:
         - name: {{.Release.Name}}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: {{.Release.Name}}-config
@@ -29,14 +33,7 @@ spec:
             httpGet:
               port: {{.Values.server_port}}
               path: /actuator/health/readiness
-            initialDelaySeconds: 60
+            initialDelaySeconds: 40
             periodSeconds: 5
             failureThreshold: 6
-          livenessProbe:
-            httpGet:
-              port: {{.Values.server_port}}
-              path: /actuator/health/liveness
-            initialDelaySeconds: 90
-            periodSeconds: 5
-            failureThreshold: 3
 

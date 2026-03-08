@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: {{.Release.Name}}
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
   template:
@@ -17,7 +17,7 @@ spec:
       containers:
         - name: {{.Release.Name}}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: {{.Release.Name}}-config
@@ -31,14 +31,7 @@ spec:
             httpGet:
               port: {{.Values.server_port}}
               path: /actuator/health/readiness
-            initialDelaySeconds: 60
+            initialDelaySeconds: 40
             periodSeconds: 5
             failureThreshold: 6
-          livenessProbe:
-            httpGet:
-              port: {{.Values.server_port}}
-              path: /actuator/health/liveness
-            initialDelaySeconds: 90
-            periodSeconds: 5
-            failureThreshold: 3
 

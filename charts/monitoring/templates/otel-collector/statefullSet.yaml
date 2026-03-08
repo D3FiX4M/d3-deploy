@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: otel-collector
+spec:
+  serviceName: otel-collector
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otel-collector
+  template:
+    metadata:
+      labels:
+        app: otel-collector
+    spec:
+      containers:
+        - name: otel-collector
+          image: "{{ .Values.otel_collector.image.repository }}:{{ .Values.otel_collector.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          args: [ "--config", "/etc/otel/otel-collector.yaml" ]
+          ports:
+            - containerPort: 4318
+          volumeMounts:
+            - name: config
+              mountPath: /etc/otel
+      volumes:
+        - name: config
+          configMap:
+            name: otel-collector-config
+            items:
+              - key: otel-collector.yaml
+                path: otel-collector.yaml
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: hostpath
+        resources:
+          requests:
+            storage: '1Gi'

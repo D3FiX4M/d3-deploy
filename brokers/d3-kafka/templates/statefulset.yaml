@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: d3-kafka
+  namespace: broker
+spec:
+  serviceName: d3-kafka
+  replicas: 1
+  selector:
+    matchLabels:
+      app: d3-kafka
+  template:
+    metadata:
+      labels:
+        app: d3-kafka
+    spec:
+      containers:
+        - name: kafka
+          image: confluentinc/cp-kafka:7.7.7
+          ports:
+            - containerPort: 9092
+              name: internal
+            - containerPort: 29092
+              name: external
+            - containerPort: 9093
+              name: controller
+          envFrom:
+            - configMapRef:
+                name: d3-kafka-config
+          env:
+            - name: KAFKA_LOG_DIRS
+              value: /var/lib/kafka/data
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/kafka/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: "standard"
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 5Gi

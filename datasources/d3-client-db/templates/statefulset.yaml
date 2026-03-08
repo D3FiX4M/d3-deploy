@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: d3-client-db
+  namespace: datasource
+spec:
+  serviceName: d3-client-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: d3-client-db
+  template:
+    metadata:
+      labels:
+        app: d3-client-db
+    spec:
+      containers:
+        - name: d3-client-db
+          image: postgres:18-alpine
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: d3-client-db-secret
+          env:
+            - name: POSTGRES_DB
+              value: client
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/18/docker
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: "standard"
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi

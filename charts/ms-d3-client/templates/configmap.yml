@@ -8,3 +8,4 @@ data:
   DB_URL: {{ .Values.db_url | quote }}
   DB_USERNAME: {{ .Values.db_username | quote }}
   KAFKA_BOOTSTRAP_SERVERS: {{ .Values.kafka_bootstrap_servers | quote }}
+  TRACE_URL: {{ .Values.trace_url | quote }}

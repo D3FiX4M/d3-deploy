@@ -1,9 +1,0 @@
-image:
-  repository: postgres
-  tag: 18-alpine
-
-db_name: client
-db_username: client
-#  TODO убрать в секреты
-db_password: client
-

@@ -1,6 +1,0 @@
-apiVersion: v2
-name: d3-client-db-chart
-description: Helm chart for d3-client-db
-type: application
-version: 1.0.0
-appVersion: '18'
