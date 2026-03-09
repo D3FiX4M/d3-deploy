@@ -1,9 +1,7 @@
 image:
   repository: d3fix4m/ms-d3-notification
-  tag: 1.0.5
-
-java_tool_options: ""
-
+  tag: 1.0.0
+java_tool_options: ''
 server_port: '8080'
 kafka_bootstrap_servers: d3-kafka.broker.svc.cluster.local:9092
 ms_d3_client_url: ms-d3-client-service.d3.svc.cluster.local:8080
