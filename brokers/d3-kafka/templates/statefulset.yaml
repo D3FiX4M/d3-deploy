@@ -37,7 +37,7 @@ spec:
     - metadata:
         name: data
       spec:
-        storageClassName: "standard"
+        storageClassName: "local-path"
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:

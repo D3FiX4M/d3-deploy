@@ -1,17 +1,17 @@
 # Стек мониторинга
 
-# Visualisation:
-## Grafana
+## Visualisation:
+    Grafana
 
-# Metrics:
-## Prometheus
-### Exporters: kube-state-metrics, node-exporter
+## Metrics:
+    Prometheus
+    Exporters: kube-state-metrics, node-exporter
 
-# Logging:
-## Loki, FluentBit
+## Logging:
+    Loki, FluentBit
 
-# Tracing:
-## Tempo
+## Tracing:
+    Tempo
 
 ### Для хранилища loki, tempo используются minIO
 
