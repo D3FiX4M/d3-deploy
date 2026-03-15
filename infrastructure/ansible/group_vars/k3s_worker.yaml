@@ -1,0 +1,4 @@
+ansible_ssh_private_key_file: ./vagrant/worker/.vagrant/machines/{{ inventory_hostname }}/virtualbox/private_key
+k3s_options: "--flannel-iface enp0s8"
+master_ip: "{{ hostvars[groups['k3s_master'][0]].ansible_host }}"
+node_token: "{{ hostvars[groups['k3s_master'][0]].node_token }}"

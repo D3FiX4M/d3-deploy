@@ -1,0 +1,22 @@
+- name: Install k3s-master
+  shell: curl -sfL https://get.k3s.io | sh -
+  environment:
+    INSTALL_K3S_EXEC: "server {{ k3s_options }}"
+  args:
+    creates: /etc/rancher/k3s/k3s.yaml
+
+- name: Ensure k3s-service is running
+  systemd:
+    name: k3s
+    state: started
+    enabled: yes
+
+- name: Get node token
+  shell: cat /var/lib/rancher/k3s/server/node-token
+  register: node_token
+  become: true
+  changed_when: false
+
+- name: Save node token for workers
+  set_fact:
+    node_token: "{{ node_token.stdout }}"
