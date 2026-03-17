@@ -1,0 +1,4 @@
+ansible_user: vagrant
+kubeconfig_local_path: "../../kubeconfig/k3s-config.yaml"
+default_user: d3fix4m
+default_password: d3d3

@@ -1,0 +1,16 @@
+- name: Install k3s-worker
+  shell: >
+    curl -sfL https://get.k3s.io |
+    K3S_URL=https://{{ master_ip }}:6443
+    K3S_TOKEN={{ node_token }}
+    sh -
+  environment:
+    INSTALL_K3S_EXEC: "{{ k3s_options }}"
+  args:
+    creates: /etc/rancher/k3s/k3s.yaml
+
+- name: Ensure k3s-agent is running
+  systemd:
+    name: k3s-agent
+    state: started
+    enabled: yes

@@ -1,0 +1,21 @@
+- name: Create user {{ default_user }}
+  user:
+    name: "{{ default_user }}"
+    password: "{{ default_password | password_hash('sha512') }}"
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    state: present
+    update_password: on_create
+
+- name: Ensure SSH allows password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication yes'
+    state: present
+
+- name: Restart SSH to apply password authentication
+  service:
+    name: ssh
+    state: restarted

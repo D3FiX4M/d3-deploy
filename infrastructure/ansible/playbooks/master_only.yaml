@@ -1,0 +1,20 @@
+- name: "K3s Cluster: common tasks and users"
+  hosts: k3s_master
+  become: true
+  roles:
+    - common
+    - users
+
+- name: "K3s Cluster: master node"
+  hosts: k3s_master
+  become: true
+  roles:
+    - k3s_master
+
+- name: "Show node token for manual use"
+  shell: cat /var/lib/rancher/k3s/server/node-token
+  register: node_token
+  changed_when: false
+
+- debug:
+    msg: "Copy this token for worker setup: {{ node_token.stdout }}"

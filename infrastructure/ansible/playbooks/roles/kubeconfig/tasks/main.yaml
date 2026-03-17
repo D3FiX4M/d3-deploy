@@ -1,0 +1,21 @@
+- name: Fetch kubeconfig to local
+  fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: "{{ kubeconfig_local_path }}"
+    flat: yes
+
+- name: Set kubeconfig server IP
+  lineinfile:
+    path: "{{ kubeconfig_local_path }}"
+    regexp: "server: https://127.0.0.1:6443"
+    line: "    server: https://{{ ansible_host  }}:6443"
+  delegate_to: localhost
+  become: no
+
+- name: Replace default with k3s in kubeconfig
+  replace:
+    path: "{{ kubeconfig_local_path }}"
+    regexp: '\bdefault\b'
+    replace: 'k3s'
+  delegate_to: localhost
+  become: no

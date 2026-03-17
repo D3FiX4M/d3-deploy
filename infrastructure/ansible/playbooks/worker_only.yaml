@@ -1,0 +1,14 @@
+- name: "K3s Cluster: common tasks and users"
+  hosts: k3s_worker
+  become: true
+  roles:
+    - common
+    - users
+
+- name: "K3s Cluster: worker nodes"
+  hosts: k3s_worker
+  become: true
+  vars:
+    k3s_node_token: "" # сюда токен
+  roles:
+    - k3s_worker
