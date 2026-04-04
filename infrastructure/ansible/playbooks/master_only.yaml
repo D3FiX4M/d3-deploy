@@ -10,11 +10,12 @@
   become: true
   roles:
     - k3s_master
+    - kubeconfig
 
-- name: "Show node token for manual use"
-  shell: cat /var/lib/rancher/k3s/server/node-token
-  register: node_token
-  changed_when: false
+#- name: "Show node token for manual use"
+#  shell: cat /var/lib/rancher/k3s/server/node-token
+#  register: node_token
+#  changed_when: false
 
-- debug:
-    msg: "Copy this token for worker setup: {{ node_token.stdout }}"
+#- debug:
+#    msg: "Copy this token for worker setup: {{ node_token.stdout }}"

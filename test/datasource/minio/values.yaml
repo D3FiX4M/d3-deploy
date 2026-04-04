@@ -1,0 +1,60 @@
+mode: standalone
+
+users:
+  - accessKey: d3fix4m
+    secretKey: d3d3d3d3
+    policy: consoleAdmin
+
+buckets:
+  - name: loki-chunks
+  - name: loki-ruler
+  - name: tempo
+
+podLabels:
+  app.kubernetes.io/name: minio
+additionalLabels:
+  app.kubernetes.io/name: minio
+
+environment:
+  CONSOLE_PROMETHEUS_JOB_ID: minio
+
+metrics:
+  serviceMonitor:
+    enabled: true
+    includeNode: true
+
+persistence:
+  enabled: true
+  storageClass: local-path
+  size: 8Gi
+  accessModes:
+    - ReadWriteOnce
+
+consoleIngress:
+  enabled: true
+  ingressClassName: nginx
+  hosts:
+    - minio.d3.local
+  annotations:
+    cert-manager.io/cluster-issuer: datasource-tls
+  tls:
+    - secretName: datasource-tls
+      hosts:
+        - minio.d3.local
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 1
+    memory: 1Gi
+
+
+
+
+
+
+
+
+

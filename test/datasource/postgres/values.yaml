@@ -1,0 +1,41 @@
+auth:
+  database: d3
+  username: d3fix4m
+  password: d3d3
+
+primary:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+  persistence:
+    enabled: true
+    storageClass: local-path
+    size: 30Gi
+    accessModes:
+      - ReadWriteOnce
+  initdb:
+    scripts:
+      init.sql: |
+        CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+        CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+backup:
+  enabled: false
+
+volumePermissions:
+  enabled: true
+
+tls:
+  enabled: false
+  certificatesSecret: datasource-tls
+  certFilename: tls.crt
+  certKeyFilename: tls.key
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true

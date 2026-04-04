@@ -1,0 +1,34 @@
+tempo:
+  server:
+    http_listen_port: 3200
+
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+
+  retention: 12h
+
+  storage:
+    trace:
+      backend: s3
+      s3:
+        bucket: tempo
+        endpoint: minio.datasource.svc.cluster.local:9000
+        access_key: d3fix4m
+        secret_key: d3d3d3d3
+        insecure: true
+
+  serviceMonitor:
+    enabled: true
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 400Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi

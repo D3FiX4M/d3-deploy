@@ -1,0 +1,24 @@
+config:
+  inputs: |
+    [INPUT]
+        Name tail
+        Path /var/log/containers/*.log
+        multiline.parser docker, cri
+        Tag kube.*
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+  outputs: |
+    [OUTPUT]
+        Name                  loki
+        Match                 kube.*
+        Host                  loki-gateway
+        Port                  80
+        Labels                namespace=$kubernetes['namespace_name'],application=$kubernetes['labels']['app.kubernetes.io/name'],pod=$kubernetes['pod_name'],container=$kubernetes['container_name']
+  filters: |
+    [FILTER]
+        Name kubernetes
+        Match kube.*
+        Merge_Log On
+        Keep_Log Off
+        K8S-Logging.Parser On
+        K8S-Logging.Exclude On

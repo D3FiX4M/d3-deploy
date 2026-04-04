@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: monitoring-tls
+  namespace: monitoring
+spec:
+  secretName: monitoring-tls
+  commonName: monitoring.d3.local
+  dnsNames:
+    - grafana.d3.local
+    - prometheus.d3.local
+    - alertmanager.d3.local
+  duration: 8760h
+  issuerRef:
+    name: d3-ca-issuer
+    kind: ClusterIssuer

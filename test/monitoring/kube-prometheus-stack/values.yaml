@@ -1,0 +1,100 @@
+kube-state-metrics:
+  fullnameOverride: "kube-state-metrics"
+
+prometheus-node-exporter:
+  fullnameOverride: "node-exporter"
+
+kubeEtcd:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeScheduler:
+  enabled: false
+nodeExporter:
+  operatingSystems:
+    aix:
+      enabled: false
+    darwin:
+      enabled: false
+
+grafana:
+  enabled: true
+  fullnameOverride: "grafana"
+  adminUser: d3fix4m
+  adminPassword: d3d3
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki-gateway.logging.svc.cluster.local/
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - grafana.d3.local
+    tls:
+      - hosts:
+          - grafana.d3.local
+        secretName: monitoring-tls
+  persistence:
+    enabled: true
+    size: 2Gi
+    storageClassName: local-path
+    accessModes:
+      - ReadWriteOnce
+  resources:
+    requests:
+      cpu: 50m
+      memory: 100Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+alertmanager:
+  enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - alertmanager.d3.local
+    tls:
+      - hosts:
+          - alertmanager.d3.local
+        secretName: monitoring-tls
+  alertmanagerSpec:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 100m
+        memory: 200Mi
+
+
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - prometheus.d3.local
+    tls:
+      - hosts:
+          - prometheus.d3.local
+        secretName: monitoring-tls
+  prometheusSpec:
+    retention: 1d
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+    storageSpec:
+      emptyDir: { } # Кеш, TODO внешнее хранилище
+

@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: datasource-tls
+  namespace: datasource
+spec:
+  secretName: datasource-tls
+  commonName: datasource.d3.local
+  dnsNames:
+    - minio.d3.local
+    - postgres.d3.local
+  duration: 8760h
+  issuerRef:
+    name: d3-ca-issuer
+    kind: ClusterIssuer
